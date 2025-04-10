@@ -1,6 +1,10 @@
 import { MikroORM, EntityManager } from "@mikro-orm/postgresql";
 import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 import * as path from "path";
+import {fileURLToPath} from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class Database {
   private static instance: Database;
