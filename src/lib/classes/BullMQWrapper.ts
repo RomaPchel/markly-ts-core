@@ -1,9 +1,9 @@
-import { Queue, Worker, Job, JobScheduler } from "bullmq";
-import { Log } from "./Logger.js";
-import type { ReportJobData } from "../interfaces/ReportsInterfaces.js";
-import { Redis } from "ioredis";
+import { Queue, Worker, Job, JobScheduler, JobsOptions } from 'bullmq';
+import type { Redis } from 'ioredis';
+import type { ReportJobData } from '../interfaces/ReportsInterfaces.js';
+import { Log } from './Logger.js';
 
-const logger: Log = Log.getInstance().extend("service");
+const logger = Log.getInstance().extend('BullMQ');
 
 export type JobProcessorMap = {
   [jobName: string]: (data: ReportJobData) => Promise<any>;
@@ -16,9 +16,9 @@ export class BullMQWrapper {
   private jobProcessors: JobProcessorMap;
 
   constructor(
-    queueName: string,
-    connection: Redis,
-    jobProcessors: JobProcessorMap,
+      queueName: string,
+      connection: Redis,
+      jobProcessors: JobProcessorMap,
   ) {
     this.jobProcessors = jobProcessors;
 
@@ -26,61 +26,68 @@ export class BullMQWrapper {
     this.scheduler = new JobScheduler(queueName, { connection });
 
     this.worker = new Worker(
-      queueName,
-      async (job: Job) => {
-        return this.processJob(job);
-      },
-      { connection },
+        queueName,
+        async (job: Job) => this.processJob(job),
+        { connection },
     );
 
-    this.worker.on("failed", (job, err) => {
-      if (job) {
-        logger.error(`Job ${job.id} failed: ${err.message}`);
-      } else {
-        logger.error(`An undefined job failed: ${err.message}`);
-      }
+    this.worker.on('completed', (job) => {
+      logger.info(`Job ${job.id} of type "${job.name}" completed.`);
+    });
+
+    this.worker.on('failed', (job, err) => {
+      logger.error(`Job ${job?.id ?? 'unknown'} failed: ${err.message}`);
     });
   }
 
   private async processJob(job: Job): Promise<any> {
-    logger.info(
-      `Processing job ${job.id} of type "${job.name}" with data: ${JSON.stringify(job.data)}`,
-    );
-
-    const data: ReportJobData = job.data;
+    logger.info(`▶Processing job "${job.name}" with data: ${JSON.stringify(job.data)}`);
     const processor = this.jobProcessors[job.name];
-
     if (!processor) {
       throw new Error(`No processor defined for job type "${job.name}"`);
     }
-
-    return await processor(data);
+    return await processor(job.data);
   }
 
-  public async addScheduledJob(
-    jobName: string,
-    data: any,
-    cron: string,
-  ): Promise<Job> {
-    return await this.queue.add(jobName, data, { repeat: { pattern: cron } });
+  async addJob(name: string, data: any, options?: JobsOptions): Promise<Job> {
+    return await this.queue.add(name, data, options);
   }
 
-  public async addJob(jobName: string, data: any): Promise<Job> {
-    return await this.queue.add(jobName, data);
+  async addScheduledJob(name: string, data: any, cron: string): Promise<Job> {
+    return await this.queue.add(name, data, { repeat: { pattern: cron } });
   }
 
-  public async getJob(jobId: string): Promise<Job | null> {
+  // async removeScheduledJob(name: string, cron: string, jobId?: string): Promise<void> {
+  //   // Use scheduler's removeRepeatable method
+  //   await this.scheduler.remov(name, { cron, jobId });
+  // }
+
+  async listScheduledJobs(): Promise<any[]> {
+    return await this.queue.getJobs();
+  }
+
+  async getJob(jobId: string): Promise<Job | null> {
     return await this.queue.getJob(jobId);
   }
 
-  public async removeJob(jobId: string): Promise<void> {
+  async removeJob(jobId: string): Promise<void> {
     const job = await this.getJob(jobId);
     if (job) {
       await job.remove();
     }
   }
 
-  public async close(): Promise<void> {
+  async drainAndClean(): Promise<void> {
+    await this.queue.drain();
+    await this.queue.clean(0, 1000, 'completed');
+    await this.queue.clean(0, 1000, 'failed');
+    await this.queue.clean(0, 1000, 'delayed');
+    await this.queue.clean(0, 1000, 'wait');
+    await this.queue.clean(0, 1000, 'active');
+    logger.info('🧹 All jobs have been cleaned up.');
+  }
+
+  async close(): Promise<void> {
     await this.worker.close();
     await this.queue.close();
     await this.scheduler.close();
