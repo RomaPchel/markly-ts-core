@@ -1,5 +1,5 @@
 {
-  "name": "@markly/ts-core",
+  "name": "markly-ts-core",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
