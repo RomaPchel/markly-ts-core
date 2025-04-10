@@ -1,12 +1,35 @@
 {
-    "extends": "@nyce/config/tsconfig.json",
     "compilerOptions": {
-        "paths": {},
-        "experimentalDecorators": true,
-        "baseUrl": "src",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2022",
+        "strict": true,
         "outDir": "dist",
+        "declaration": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": "src",
+        "declarationMap": true,
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowJs": false,
         "allowImportingTsExtensions": false,
-        "verbatimModuleSyntax": false
+        "resolveJsonModule": true,
+    },
+    "ts-node": {
+        "esm": true,
+        "transpileOnly": true
     },
     "include": ["src"]
 }
