@@ -12,7 +12,7 @@ const RoleHierarchy: Record<OrganizationRole, OrganizationRole[]> = {
 
 const database: Database = await Database.getInstance();
 
-export const roleMiddleware = (requiredRole: OrganizationRole) => {
+export const RoleMiddleware = (requiredRole: OrganizationRole) => {
   return async (ctx: Context, next: Next) => {
     const user = ctx.state.user as User;
 

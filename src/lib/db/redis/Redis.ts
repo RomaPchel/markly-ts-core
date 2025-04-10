@@ -4,7 +4,7 @@ import type { RedisOptions } from "ioredis";
 
 const logger: Log = Log.getInstance().extend("redis-client");
 
-class RedisClient {
+export class RedisClient {
   private static instance: Redis;
 
   private constructor() {}
@@ -54,4 +54,3 @@ class RedisClient {
   }
 }
 
-export default RedisClient;
