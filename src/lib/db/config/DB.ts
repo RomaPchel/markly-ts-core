@@ -1,5 +1,6 @@
 import { MikroORM, EntityManager } from "@mikro-orm/postgresql";
 import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
+import * as path from "path";
 
 export class Database {
   private static instance: Database;
@@ -15,8 +16,7 @@ export class Database {
     if (!Database.instance) {
       const orm = await MikroORM.init({
         metadataProvider: TsMorphMetadataProvider,
-        entities: ["./dist/lib/entities/*.js"],
-        entitiesTs: ["./src/lib/entities/*.ts"],
+        entities: [path.join(__dirname, "../entities")],
         dbName: process.env.DATABASE_NAME || "saas",
         host: process.env.DATABASE_HOST || "localhost",
         port: Number(process.env.DATABASE_PORT) || 5432,
