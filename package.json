@@ -1,6 +1,6 @@
 {
   "name": "markly-ts-core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,8 @@
     "build:all": "npm run build && npm run generate:dts",
     "start": "node --env-file .env --experimental-specifier-resolution=node dist/index.js",
     "watch": "pnpm docker:up & npx nodemon --config ./nodemon.json",
-    "start:dev": "npm run watch"
+    "start:dev": "npm run watch",
+    "publish:build": "pnpm build:all && pnpm publish"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.4.3",
