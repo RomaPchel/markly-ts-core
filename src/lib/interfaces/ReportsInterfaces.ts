@@ -12,6 +12,7 @@ interface BaseSchedule {
   clientUuid: string;
   reviewNeeded: boolean;
   datePreset: FACEBOOK_DATE_PRESETS;
+  organizationUuid: string;
 }
 
 interface TimeBasedSchedule extends BaseSchedule {
@@ -58,6 +59,7 @@ export interface CronSchedule extends ScheduleModifiers {
   clientUuid: string;
   reviewNeeded: boolean;
   datePreset: FACEBOOK_DATE_PRESETS;
+  organizationUuid: string;
 }
 
 export type ReportScheduleRequest =
