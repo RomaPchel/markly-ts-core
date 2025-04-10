@@ -1,5 +1,17 @@
 import { MikroORM, EntityManager } from "@mikro-orm/postgresql";
 import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
+import {User} from "../../entities/User.js";
+import {Organization} from "../../entities/Organization.js";
+import {OrganizationClient} from "../../entities/OrganizationClient.js";
+import {OrganizationToken} from "../../entities/OrganizationToken.js";
+import {OrganizationMember} from "../../entities/OrganizationMember.js";
+import {SchedulingOption} from "../../entities/SchedulingOption.js";
+import {
+  CommunicationChannel,
+  EmailChannel,
+  SlackChannel,
+  WhatsAppChannel
+} from "../../entities/ClientCommunicationChannel.js";
 
 export class Database {
   private static instance: Database;
@@ -15,7 +27,18 @@ export class Database {
     if (!Database.instance) {
       const orm = await MikroORM.init({
         metadataProvider: TsMorphMetadataProvider,
-        entities: ["./dist/lib/entities/*.js"],
+        entities: [
+            User,
+          Organization,
+          OrganizationClient,
+          OrganizationToken,
+          OrganizationMember,
+          SchedulingOption,
+          CommunicationChannel,
+          EmailChannel,
+          SlackChannel,
+          WhatsAppChannel,
+        ],
         dbName: process.env.DATABASE_NAME || "saas",
         host: process.env.DATABASE_HOST || "localhost",
         port: Number(process.env.DATABASE_PORT) || 5432,
