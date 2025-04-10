@@ -1,0 +1,12 @@
+{
+    "extends": "@nyce/config/tsconfig.json",
+    "compilerOptions": {
+        "paths": {},
+        "experimentalDecorators": true,
+        "baseUrl": "src",
+        "outDir": "dist",
+        "allowImportingTsExtensions": false,
+        "verbatimModuleSyntax": false
+    },
+    "include": ["src"]
+}

@@ -1,0 +1,33 @@
+name: Publish NPM package (manual)
+
+on: workflow_dispatch
+
+permissions:
+    contents: write
+    packages: write
+
+env:
+    NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [20.x]
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set build .npmrc
+              run: cp -f .npmrc.build .npmrc
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - uses: actions/setup-node@v4
+              with:
+                  cache: "pnpm"
+                  node-version: ${{ matrix.node-version }}
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Publish (P)NPM package
+              run: pnpm publish --no-git-checks

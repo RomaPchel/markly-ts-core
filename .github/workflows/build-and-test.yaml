@@ -1,0 +1,40 @@
+name: Build and test package (without versioning)
+
+on:
+    pull_request:
+        branches: [develop, test, acceptance, main]
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+env:
+    NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [20.x]
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.event.pull_request.head.ref }}
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - uses: actions/setup-node@v4
+              with:
+                  cache: "pnpm"
+                  node-version: ${{ matrix.node-version }}
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Build (Compile TS)
+              run: pnpm build
+            - name: Run linter on code (ESLint)
+              run: pnpm lint --max-warnings 0
+            - name: Check code formatting (Prettier)
+              run: pnpm format
