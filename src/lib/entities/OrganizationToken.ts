@@ -17,17 +17,17 @@ export class OrganizationToken extends BaseEntity {
   @Enum()
   type!: OrganizationTokenType;
 
-  @Property()
+  @Property({ type: 'text' })
   encryptedToken!: string;
 
   @ManyToOne(() => Organization)
   organization!: Organization;
 
-  @Property()
-  private iv!: string;
+  @Property({ type: 'varchar', length: 32 })
+  iv!: string;
 
-  @Property()
-  private tag!: string;
+  @Property({ type: 'varchar', length: 32 })
+  tag!: string;
 
   @BeforeCreate()
   @BeforeUpdate()
