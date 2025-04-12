@@ -4,6 +4,7 @@ export { BullMQWrapper } from "lib/classes/BullMQWrapper.js";
 export { Log } from "lib/classes/Logger.js";
 export { Validator } from "lib/classes/Validator.js";
 export { CookiesWrapper } from "lib/classes/CookiesWrapper.js";
+export { GCPSecretsManager } from "lib/classes/SecretsManager.js";
 
 //database
 export {Database} from "lib/db/config/DB.js"
@@ -17,7 +18,6 @@ export * from 'lib/entities/ClientCommunicationChannel.js'
 export { Organization } from 'lib/entities/Organization.js'
 export { OrganizationClient } from 'lib/entities/OrganizationClient.js'
 export { OrganizationMember } from 'lib/entities/OrganizationMember.js'
-export { OrganizationToken } from 'lib/entities/OrganizationToken.js'
 export { SchedulingOption } from 'lib/entities/SchedulingOption.js'
 
 //middlewares
