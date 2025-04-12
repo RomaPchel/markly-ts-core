@@ -11,6 +11,7 @@ import {
   SlackChannel,
   WhatsAppChannel
 } from "../../entities/ClientCommunicationChannel.js";
+import {OrganizationToken} from "../../entities/OrganizationToken.js";
 
 export class Database {
   private static instance: Database;
@@ -31,6 +32,7 @@ export class Database {
           Organization,
           OrganizationClient,
           OrganizationMember,
+          OrganizationToken,
           SchedulingOption,
           CommunicationChannel,
           EmailChannel,

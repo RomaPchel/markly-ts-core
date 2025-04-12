@@ -17,6 +17,7 @@ export { User } from 'lib/entities/User.js'
 export * from 'lib/entities/ClientCommunicationChannel.js'
 export { Organization } from 'lib/entities/Organization.js'
 export { OrganizationClient } from 'lib/entities/OrganizationClient.js'
+export { OrganizationToken } from 'lib/entities/OrganizationToken.js'
 export { OrganizationMember } from 'lib/entities/OrganizationMember.js'
 export { SchedulingOption } from 'lib/entities/SchedulingOption.js'
 
