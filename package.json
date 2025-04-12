@@ -1,6 +1,6 @@
 {
   "name": "markly-ts-core",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,11 +10,10 @@
   ],
   "scripts": {
     "build": "npx swc --strip-leading-paths --config-file .swcrc ./src -d dist && npm run generate:dts",
-    "generate:dts": "tsc --emitDeclarationOnly --declaration --outDir dist",
+    "generate:dts": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist",
     "prettier:format": "pnpm exec prettier . --write",
     "prettier:check": "npx prettier . --check\n",
     "docker:up": "docker compose -f ../docker/compose.yaml up -d",
-    "build:all": "npm run build",
     "start": "node --env-file .env --experimental-specifier-resolution=node dist/index.js",
     "watch": "pnpm docker:up & npx nodemon --config ./nodemon.json",
     "start:dev": "npm run watch",
