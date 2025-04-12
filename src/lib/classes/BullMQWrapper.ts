@@ -1,4 +1,4 @@
-import { Queue, Worker, Job, JobScheduler, JobsOptions } from 'bullmq';
+import { Queue, Worker, Job, JobScheduler, type JobsOptions } from 'bullmq';
 import type { Redis } from 'ioredis';
 import type { ReportJobData } from '../interfaces/ReportsInterfaces.js';
 import { Log } from './Logger.js';

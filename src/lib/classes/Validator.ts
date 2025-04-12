@@ -35,6 +35,7 @@ export class Validator {
     if (!schema) {
       throw new Error(`No validation schema defined for URL ${path}`);
     }
+    // @ts-ignore
     schema.parse(request.body);
   }
 

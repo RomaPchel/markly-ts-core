@@ -1,16 +1,16 @@
 {
+    "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "target": "ES2022",
-        "strict": true,
-        "outDir": "dist",
-        "declaration": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "sourceMap": true,
         "baseUrl": "src",
-        "declarationMap": true,
-        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "types": ["node"],
+        "lib": ["es2021"],
+        "target": "es2022",
+        "module": "es2022",
+        "moduleResolution": "node",
+        "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
@@ -23,13 +23,14 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "verbatimModuleSyntax": true,
         "allowJs": false,
         "allowImportingTsExtensions": false,
-        "resolveJsonModule": true,
+        "resolveJsonModule": true
     },
+    "include": ["src"],
     "ts-node": {
         "esm": true,
-        "transpileOnly": true
-    },
-    "include": ["src"]
+        "experimentalSpecifierResolution": "node"
+    }
 }

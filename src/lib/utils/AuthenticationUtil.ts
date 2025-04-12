@@ -4,11 +4,7 @@ import { TokenExpiration } from "../enums/enums.js";
 import bcrypt from "bcryptjs";
 import { OrganizationMember } from "../entities/OrganizationMember.js";
 import type { Organization } from "../entities/Organization.js";
-import {
-  CleanedUser,
-  LoginRequestBody,
-  RegistrationRequestBody,
-} from "../interfaces/AuthInterfaces.js";
+import type {CleanedUser, LoginRequestBody, RegistrationRequestBody} from "../interfaces/AuthInterfaces.js";
 import { Database } from "../db/config/DB.js";
 
 const database: Database = await Database.getInstance();
