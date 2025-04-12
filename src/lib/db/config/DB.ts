@@ -3,7 +3,6 @@ import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 import {User} from "../../entities/User.js";
 import {Organization} from "../../entities/Organization.js";
 import {OrganizationClient} from "../../entities/OrganizationClient.js";
-import {OrganizationToken} from "../../entities/OrganizationToken.js";
 import {OrganizationMember} from "../../entities/OrganizationMember.js";
 import {SchedulingOption} from "../../entities/SchedulingOption.js";
 import {
@@ -31,7 +30,6 @@ export class Database {
             User,
           Organization,
           OrganizationClient,
-          OrganizationToken,
           OrganizationMember,
           SchedulingOption,
           CommunicationChannel,
