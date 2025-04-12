@@ -1,12 +1,12 @@
 {
   "name": "markly-ts-core",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "files": [
-    "dist/**/*"
+    "dist"
   ],
   "scripts": {
     "build": "npx swc --strip-leading-paths --config-file .swcrc ./src -d dist && npm run generate:dts",
