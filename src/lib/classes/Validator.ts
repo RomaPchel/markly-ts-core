@@ -9,6 +9,7 @@ import {
   ScheduleReportsRequestSchema,
   SetActiveOrganizationSchema,
   UpdateNameRequestSchema,
+  SaveAnswerRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 const schemaMap: { [key: string]: ZodSchema<any> } = {
@@ -24,6 +25,8 @@ const schemaMap: { [key: string]: ZodSchema<any> } = {
   "/api/user/active-organization": SetActiveOrganizationSchema,
 
   "/api/user/name": UpdateNameRequestSchema,
+
+  "/api/onboarding/answer": SaveAnswerRequestSchema,
 };
 
 export class Validator {

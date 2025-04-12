@@ -12,6 +12,7 @@ import {
   WhatsAppChannel
 } from "../../entities/ClientCommunicationChannel.js";
 import {OrganizationToken} from "../../entities/OrganizationToken.js";
+import { OnboardingQuestionAnswer } from "lib/entities/OnboardingQuestionAnswer.js";
 
 export class Database {
   private static instance: Database;
@@ -38,6 +39,7 @@ export class Database {
           EmailChannel,
           SlackChannel,
           WhatsAppChannel,
+          OnboardingQuestionAnswer
         ],
         dbName: process.env.DATABASE_NAME || "saas",
         host: process.env.DATABASE_HOST || "localhost",
