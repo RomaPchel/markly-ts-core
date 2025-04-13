@@ -75,3 +75,11 @@ export const SaveAnswerRequestSchema = z.object({
   question: z.string(),
   answer: z.string(),
 });
+
+export const CreateOrganizationRequestSchema = z.object({
+  name: z.string()
+});
+
+export const UseInviteCodeRequestSchema = z.object({
+  code: z.string()
+});
