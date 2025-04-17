@@ -20,6 +20,8 @@ export { OrganizationClient } from 'lib/entities/OrganizationClient.js'
 export { OrganizationToken } from 'lib/entities/OrganizationToken.js'
 export { OrganizationMember } from 'lib/entities/OrganizationMember.js'
 export { SchedulingOption } from 'lib/entities/SchedulingOption.js'
+export { OnboardingQuestionAnswer } from 'lib/entities/OnboardingQuestionAnswer.js'
+export { OrganizationInvite } from 'lib/entities/OrganizationInvite.js'
 
 //middlewares
 export {AuthMiddleware} from 'lib/middlewares/AuthMiddleware.js'
@@ -33,7 +35,7 @@ export * from 'lib/interfaces/AuthInterfaces.js'
 export * from 'lib/interfaces/FacebookInterfaces.js'
 export * from 'lib/interfaces/ReportsInterfaces.js'
 export * from 'lib/interfaces/UserInterfaces.js'
-
+export * from 'lib/interfaces/OnboardingInterfaces.js'
 //schemas
 export * from 'lib/schemas/ZodSchemas.js'
 

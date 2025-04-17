@@ -27,8 +27,6 @@ export class AuthenticationUtil {
 
     const newUser: User = new User();
 
-    newUser.firstName = body.firstName;
-    newUser.lastName = body.lastName;
     newUser.email = body.email;
     newUser.password = body.password; //hashed before creating via @BeforeCreate
 
@@ -99,13 +97,13 @@ export class AuthenticationUtil {
   }
 
   public static async convertPersistedToUser(user: User): Promise<CleanedUser> {
-    return {
+    const cleanedUser: CleanedUser = {
       uuid: user.uuid,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
       roles: await this.getUserRoleInOrganization(user),
     };
+
+    return cleanedUser;
   }
 
   public static signAccessToken(cleanedUser: CleanedUser) {

@@ -4,9 +4,7 @@ export const RegistrationRequestSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
-  firstName: z.string(),
-  lastName: z.string(),
+    .min(8, { message: "Password must be at least 8 characters long" })
 });
 
 export const LoginRequestSchema = z.object({
@@ -66,4 +64,22 @@ export const AdAccountsBusinessesRequestSchema = z.object({
   organizationName: z
     .string()
     .min(1, { message: "organizationName is required" }),
+});
+
+export const UpdateNameRequestSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+});
+
+export const SaveAnswerRequestSchema = z.object({
+  question: z.string(),
+  answer: z.string(),
+});
+
+export const CreateOrganizationRequestSchema = z.object({
+  name: z.string()
+});
+
+export const UseInviteCodeRequestSchema = z.object({
+  code: z.string()
 });

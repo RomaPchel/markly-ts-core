@@ -8,6 +8,10 @@ import {
   ReportsQueryParamsSchema,
   ScheduleReportsRequestSchema,
   SetActiveOrganizationSchema,
+  UpdateNameRequestSchema,
+  SaveAnswerRequestSchema,
+  CreateOrganizationRequestSchema,
+  UseInviteCodeRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 const schemaMap: { [key: string]: ZodSchema<any> } = {
@@ -21,7 +25,15 @@ const schemaMap: { [key: string]: ZodSchema<any> } = {
   "/api/ad-accounts/businesses": AdAccountsBusinessesRequestSchema,
 
   "/api/user/active-organization": SetActiveOrganizationSchema,
+
+  "/api/user/name": UpdateNameRequestSchema,
+
+  "/api/onboarding/answer": SaveAnswerRequestSchema,
+
+  "/api/organizations/organization": CreateOrganizationRequestSchema,
+  "/api/organizations/invite-code": UseInviteCodeRequestSchema,
 };
+
 
 export class Validator {
   private static getPathFromUrl(url: string): string {
