@@ -57,41 +57,41 @@ export class Log {
   }
 
   public error(message: unknown, error?: unknown): void {
+    const logNamespace = `${this.baseName}:error`;
+
     if (typeof message === "string") {
-      this.logger.error(message, error, {
-        namespace: `${this.baseName}:warning`,
-      });
+      this.logger.error(message, { namespace: logNamespace });
     } else {
-      this.logger.error(JSON.stringify(message), {
-        namespace: `${this.baseName}:warning`,
-      });
+      this.logger.error(JSON.stringify(message), { namespace: logNamespace });
     }
 
     if (error) {
-      this.logger.error(JSON.stringify(error), {
-        namespace: `${this.baseName}:warning`,
-      });
+      if (error instanceof Error) {
+        this.logger.error(error.stack || error.message, { namespace: logNamespace });
+      } else if (typeof error === "object") {
+        this.logger.error(JSON.stringify(error, null, 2), { namespace: logNamespace });
+      } else {
+        this.logger.error(String(error), { namespace: logNamespace });
+      }
     }
   }
 
   public catchError(error: unknown): void {
-    if (!error) {
-      return;
-    }
+    if (!error) return;
+
+    const logNamespace = `${this.baseName}:error`;
 
     if (isAxiosError(error)) {
-      this.error(error.toJSON());
-    } else if (typeof error === "string") {
-      this.error(error.toUpperCase());
+      this.logger.error(JSON.stringify(error.toJSON(), null, 2), { namespace: logNamespace });
     } else if (error instanceof Error) {
-      this.error(error.message);
-    } else if (
-      typeof error === "object" &&
-      Object.keys(error).includes("message")
-    ) {
-      this.error((error as Error).message);
+      this.logger.error(error.stack || error.message, { namespace: logNamespace });
+    } else if (typeof error === "string") {
+      this.logger.error(error, { namespace: logNamespace });
+    } else {
+      this.logger.error(JSON.stringify(error, null, 2), { namespace: logNamespace });
     }
   }
+
 
   public catchErrorAndLogUuid(error: unknown): string {
     const uuid: string = crypto.randomUUID();
