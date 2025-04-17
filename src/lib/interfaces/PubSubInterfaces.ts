@@ -1,4 +1,4 @@
-interface NotificationDataMessage {
+export interface NotificationDataMessage {
     reportUrl: string,
     clientUuid: string
 }
