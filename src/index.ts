@@ -5,6 +5,8 @@ export { Log } from "lib/classes/Logger.js";
 export { Validator } from "lib/classes/Validator.js";
 export { CookiesWrapper } from "lib/classes/CookiesWrapper.js";
 export { GCPSecretsManager } from "lib/classes/SecretsManager.js";
+export { GCSWrapper } from "lib/classes/GCSWrapper.js";
+export { PubSubWrapper } from "lib/classes/PubSub.js";
 
 //database
 export {Database} from "lib/db/config/DB.js"
@@ -36,6 +38,8 @@ export * from 'lib/interfaces/FacebookInterfaces.js'
 export * from 'lib/interfaces/ReportsInterfaces.js'
 export * from 'lib/interfaces/UserInterfaces.js'
 export * from 'lib/interfaces/OnboardingInterfaces.js'
+export * from 'lib/interfaces/PubSubInterfaces.js'
+
 //schemas
 export * from 'lib/schemas/ZodSchemas.js'
 
