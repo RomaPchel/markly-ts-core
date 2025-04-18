@@ -12,6 +12,8 @@ import {
   SaveAnswerRequestSchema,
   CreateOrganizationRequestSchema,
   UseInviteCodeRequestSchema,
+  HandleFacebookLoginRequestSchema,
+  CreateClientRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 const schemaMap: { [key: string]: ZodSchema<any> } = {
@@ -25,13 +27,15 @@ const schemaMap: { [key: string]: ZodSchema<any> } = {
   "/api/ad-accounts/businesses": AdAccountsBusinessesRequestSchema,
 
   "/api/user/active-organization": SetActiveOrganizationSchema,
-
   "/api/user/name": UpdateNameRequestSchema,
+  "/api/user/handle-facebook-login": HandleFacebookLoginRequestSchema,
 
   "/api/onboarding/answer": SaveAnswerRequestSchema,
 
   "/api/organizations/organization": CreateOrganizationRequestSchema,
   "/api/organizations/invite-code": UseInviteCodeRequestSchema,
+
+  "/api/clients/client": CreateClientRequestSchema,
 };
 
 
