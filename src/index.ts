@@ -40,6 +40,7 @@ export * from 'lib/interfaces/UserInterfaces.js'
 export * from 'lib/interfaces/OnboardingInterfaces.js'
 export * from 'lib/interfaces/PubSubInterfaces.js'
 
+export * from 'lib/interfaces/ClientInterfaces.js'
 //schemas
 export * from 'lib/schemas/ZodSchemas.js'
 

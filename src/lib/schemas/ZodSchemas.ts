@@ -83,3 +83,14 @@ export const CreateOrganizationRequestSchema = z.object({
 export const UseInviteCodeRequestSchema = z.object({
   code: z.string()
 });
+
+export const HandleFacebookLoginRequestSchema = z.object({
+  code: z.string(),
+  redirectUri: z.string()
+});
+
+export const CreateClientRequestSchema = z.object({
+  name: z.string(),
+  facebookAdAccounts: z.array(z.string()),
+  tiktokAdAccounts: z.array(z.string())
+});
