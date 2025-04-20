@@ -1,5 +1,7 @@
+import { match } from "path-to-regexp";
+import type { Context } from "koa";
+import type { MatchFunction } from "path-to-regexp";
 import { ZodSchema } from "zod";
-import type { Context, Request } from "koa";
 import {
   AdAccountsBusinessesRequestSchema,
   LoginRequestSchema,
@@ -14,63 +16,131 @@ import {
   UseInviteCodeRequestSchema,
   HandleFacebookLoginRequestSchema,
   CreateClientRequestSchema,
+  CreateClientFacebookAdAccountRequestSchema,
+  DeleteClientFacebookAdAccountRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
-const schemaMap: { [key: string]: ZodSchema<any> } = {
-  "/api/auth/register": RegistrationRequestSchema,
-  "/api/auth/login": LoginRequestSchema,
-  "/api/auth/refresh": RefreshRequestSchema,
-
-  "/api/reports/schedule": ScheduleReportsRequestSchema,
-  "/api/reports/": ReportsQueryParamsSchema,
-
-  "/api/ad-accounts/businesses": AdAccountsBusinessesRequestSchema,
-
-  "/api/user/active-organization": SetActiveOrganizationSchema,
-  "/api/user/name": UpdateNameRequestSchema,
-  "/api/user/handle-facebook-login": HandleFacebookLoginRequestSchema,
-
-  "/api/onboarding/answer": SaveAnswerRequestSchema,
-
-  "/api/organizations/organization": CreateOrganizationRequestSchema,
-  "/api/organizations/invite-code": UseInviteCodeRequestSchema,
-
-  "/api/clients/client": CreateClientRequestSchema,
+type SchemaEntry = {
+  pattern: string;
+  matcher: MatchFunction<Record<string, string>>;
+  schema: ZodSchema<any>;
 };
 
+const schemaMap: SchemaEntry[] = [
+  {
+    pattern: "/api/auth/register",
+    matcher: match("/api/auth/register", { decode: decodeURIComponent }),
+    schema: RegistrationRequestSchema,
+  },
+  {
+    pattern: "/api/auth/login",
+    matcher: match("/api/auth/login", { decode: decodeURIComponent }),
+    schema: LoginRequestSchema,
+  },
+  {
+    pattern: "/api/auth/refresh",
+    matcher: match("/api/auth/refresh", { decode: decodeURIComponent }),
+    schema: RefreshRequestSchema,
+  },
+  {
+    pattern: "/api/reports/schedule",
+    matcher: match("/api/reports/schedule", { decode: decodeURIComponent }),
+    schema: ScheduleReportsRequestSchema,
+  },
+  {
+    pattern: "/api/reports",
+    matcher: match("/api/reports", { decode: decodeURIComponent }),
+    schema: ReportsQueryParamsSchema,
+  },
+  {
+    pattern: "/api/ad-accounts/businesses",
+    matcher: match("/api/ad-accounts/businesses", { decode: decodeURIComponent }),
+    schema: AdAccountsBusinessesRequestSchema,
+  },
+  {
+    pattern: "/api/user/active-organization",
+    matcher: match("/api/user/active-organization", { decode: decodeURIComponent }),
+    schema: SetActiveOrganizationSchema,
+  },
+  {
+    pattern: "/api/user/name",
+    matcher: match("/api/user/name", { decode: decodeURIComponent }),
+    schema: UpdateNameRequestSchema,
+  },
+  {
+    pattern: "/api/user/handle-facebook-login",
+    matcher: match("/api/user/handle-facebook-login", { decode: decodeURIComponent }),
+    schema: HandleFacebookLoginRequestSchema,
+  },
+  {
+    pattern: "/api/onboarding/answer",
+    matcher: match("/api/onboarding/answer", { decode: decodeURIComponent }),
+    schema: SaveAnswerRequestSchema,
+  },
+  {
+    pattern: "/api/organizations",
+    matcher: match("/api/organizations", { decode: decodeURIComponent }),
+    schema: CreateOrganizationRequestSchema,
+  },
+  {
+    pattern: "/api/organizations/invite-code",
+    matcher: match("/api/organizations/invite-code", { decode: decodeURIComponent }),
+    schema: UseInviteCodeRequestSchema,
+  },
+  {
+    pattern: "/api/clients",
+    matcher: match("/api/clients", { decode: decodeURIComponent }),
+    schema: CreateClientRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/ad-accounts",
+    matcher: match("/api/clients/:clientUuid/ad-accounts", { decode: decodeURIComponent }),
+    schema: CreateClientFacebookAdAccountRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/ad-accounts/:adAccountId",
+    matcher: match("/api/clients/:clientUuid/ad-accounts/:adAccountId", { decode: decodeURIComponent }),
+    schema: DeleteClientFacebookAdAccountRequestSchema,
+  },
+];
 
 export class Validator {
-  private static getPathFromUrl(url: string): string {
-    // Remove query parameters from URL
-    return url.split("?")[0];
+  private static findSchema(path: string) {
+    for (const entry of schemaMap) {
+      const matched = entry.matcher(path);
+      if (matched) {
+        return { schema: entry.schema, params: matched.params };
+      }
+    }
+    return null;
   }
 
-  public static validateBody(request: Request) {
-    const path = this.getPathFromUrl(request.url);
-    const schema = schemaMap[path];
-    if (!schema) {
+  public static validateBody(ctx: Context) {
+    const path = ctx.request.path;
+    const hit = this.findSchema(path);
+    if (!hit) {
       throw new Error(`No validation schema defined for URL ${path}`);
     }
-    // @ts-ignore
-    schema.parse(request.body);
+    hit.schema.parse((ctx.request as any).body);
   }
 
-  public static validateQuery(request: Request) {
-    const path = this.getPathFromUrl(request.url);
-    const schema = schemaMap[path];
-    if (!schema) {
+  public static validateQuery(ctx: Context) {
+    const path = ctx.request.path;
+    const hit = this.findSchema(path);
+    if (!hit) {
       throw new Error(`No validation schema defined for URL ${path}`);
     }
-    schema.parse(request.query);
+    hit.schema.parse(ctx.request.query);
   }
 
   public static validateRequest(ctx: Context) {
+    // body for non‑GET
     if (ctx.request.method !== "GET") {
-      this.validateBody(ctx.request);
+      this.validateBody(ctx);
     }
-
-    if (ctx.request.querystring.length > 0) {
-      this.validateQuery(ctx.request);
+    // query if any
+    if (ctx.request.querystring) {
+      this.validateQuery(ctx);
     }
   }
 }

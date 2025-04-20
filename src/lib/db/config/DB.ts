@@ -14,6 +14,7 @@ import {
 import {OrganizationToken} from "../../entities/OrganizationToken.js";
 import { OnboardingQuestionAnswer } from "lib/entities/OnboardingQuestionAnswer.js";
 import { OrganizationInvite } from "lib/entities/OrganizationInvite.js";
+import { ClientFacebookAdAccount } from "lib/entities/ClientFacebookAdAccount.js";
 export class Database {
   private static instance: Database;
   public orm: MikroORM;
@@ -40,7 +41,8 @@ export class Database {
           SlackChannel,
           WhatsAppChannel,
           OnboardingQuestionAnswer,
-          OrganizationInvite
+          OrganizationInvite,
+          ClientFacebookAdAccount
         ],
         dbName: process.env.DATABASE_NAME || "saas",
         host: process.env.DATABASE_HOST || "localhost",
