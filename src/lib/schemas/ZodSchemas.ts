@@ -92,5 +92,13 @@ export const HandleFacebookLoginRequestSchema = z.object({
 export const CreateClientRequestSchema = z.object({
   name: z.string(),
   facebookAdAccounts: z.array(z.string()),
-  tiktokAdAccounts: z.array(z.string())
+  // tiktokAdAccounts: z.array(z.string())
 });
+
+export const CreateClientFacebookAdAccountRequestSchema = z.object({
+  adAccountId: z.string()
+});
+
+export const DeleteClientFacebookAdAccountRequestSchema = z.object({
+});
+

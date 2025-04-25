@@ -14,9 +14,6 @@ export class OrganizationClient extends BaseEntity {
   @Property()
   name!: string;
 
-  @Property({ type: 'string' })
-  accountId!: string;
-
   @ManyToOne(() => Organization)
   organization!: Organization;
 

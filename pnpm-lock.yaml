@@ -26,6 +26,7 @@ specifiers:
   koa-bodyparser: ^4.3.0
   koa-json: ^2.0.2
   koa-router: ^13.0.1
+  path-to-regexp: ^8.2.0
   prettier: 3.4.2
   typescript: ^5.7.3
   uuid: ^11.0.5
@@ -44,6 +45,7 @@ dependencies:
   bullmq: 5.48.1
   ioredis: 5.6.1
   jsonwebtoken: 9.0.2
+  path-to-regexp: 8.2.0
   uuid: 11.1.0
   winston: 3.17.0
   zod: 3.24.2
@@ -2959,7 +2961,6 @@ packages:
   /path-to-regexp/8.2.0:
     resolution: {integrity: sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ==}
     engines: {node: '>=16'}
-    dev: true
 
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
