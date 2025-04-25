@@ -24,6 +24,7 @@ export { OrganizationMember } from 'lib/entities/OrganizationMember.js'
 export { SchedulingOption } from 'lib/entities/SchedulingOption.js'
 export { OnboardingQuestionAnswer } from 'lib/entities/OnboardingQuestionAnswer.js'
 export { OrganizationInvite } from 'lib/entities/OrganizationInvite.js'
+export { Report } from 'lib/entities/Report.js'
 
 //middlewares
 export {AuthMiddleware} from 'lib/middlewares/AuthMiddleware.js'
