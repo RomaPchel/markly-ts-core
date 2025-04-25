@@ -43,7 +43,6 @@ export class Database {
           SlackChannel,
           WhatsAppChannel,
           OnboardingQuestionAnswer,
-          OrganizationInvite,
           Report,
           OrganizationInvite,
           ClientFacebookAdAccount
