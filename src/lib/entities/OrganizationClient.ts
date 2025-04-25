@@ -8,6 +8,7 @@ import {
 import { BaseEntity } from "./BaseEntity.js";
 import { Organization } from "./Organization.js";
 import { SchedulingOption } from "./SchedulingOption.js";
+import {ClientFacebookAdAccount} from "./ClientFacebookAdAccount.js";
 
 @Entity()
 export class OrganizationClient extends BaseEntity {
@@ -16,6 +17,12 @@ export class OrganizationClient extends BaseEntity {
 
   @ManyToOne(() => Organization)
   organization!: Organization;
+
+  @OneToMany(
+      () => ClientFacebookAdAccount,
+      (adAccounts: ClientFacebookAdAccount) => adAccounts.client,
+  )
+  adAccounts? = new Collection<ClientFacebookAdAccount>(this);
 
   @OneToMany(
     () => SchedulingOption,
