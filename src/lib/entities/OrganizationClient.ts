@@ -18,6 +18,9 @@ export class OrganizationClient extends BaseEntity {
   @ManyToOne(() => Organization)
   organization!: Organization;
 
+  @Property({ nullable: true })
+  slackConversationId?: string;
+
   @OneToMany(
       () => ClientFacebookAdAccount,
       (adAccounts: ClientFacebookAdAccount) => adAccounts.client,

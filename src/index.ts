@@ -26,6 +26,7 @@ export { OnboardingQuestionAnswer } from 'lib/entities/OnboardingQuestionAnswer.
 export { OrganizationInvite } from 'lib/entities/OrganizationInvite.js'
 export { ClientFacebookAdAccount } from 'lib/entities/ClientFacebookAdAccount.js'
 export { Report } from 'lib/entities/Report.js'
+export { ClientToken } from 'lib/entities/ClientToken.js'
 
 //middlewares
 export {AuthMiddleware} from 'lib/middlewares/AuthMiddleware.js'

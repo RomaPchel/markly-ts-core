@@ -35,7 +35,7 @@ export class CookiesWrapper {
       path: "/",
 
       domain:
-        process.env.NODE_ENV === "production" ? "https://sass.com" : undefined,
+        process.env.NODE_ENV === "production" ? "https://marklie.com" : undefined,
     };
   }
 }

@@ -102,3 +102,24 @@ export const CreateClientFacebookAdAccountRequestSchema = z.object({
 export const DeleteClientFacebookAdAccountRequestSchema = z.object({
 });
 
+export const HandleSlackLoginRequestSchema = z.object({
+  code: z.string(),
+  redirectUri: z.string(),
+  organizationClientId: z.string()
+});
+
+export const SetSlackConversationIdRequestSchema = z.object({
+  conversationId: z.string()
+});
+
+export const SendMessageToSlackRequestSchema = z.object({
+  message: z.string()
+});
+
+export const SetSlackWorkspaceTokenRequestSchema = z.object({
+  tokenId: z.string()
+});
+
+export const SendMessageWithFileToSlackRequestSchema = z.object({
+  message: z.string()
+});

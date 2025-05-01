@@ -18,6 +18,11 @@ import {
   CreateClientRequestSchema,
   CreateClientFacebookAdAccountRequestSchema,
   DeleteClientFacebookAdAccountRequestSchema,
+  HandleSlackLoginRequestSchema,
+  SetSlackConversationIdRequestSchema,
+  SendMessageToSlackRequestSchema,
+  SetSlackWorkspaceTokenRequestSchema,
+  SendMessageWithFileToSlackRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -73,6 +78,11 @@ const schemaMap: SchemaEntry[] = [
     schema: HandleFacebookLoginRequestSchema,
   },
   {
+    pattern: "/api/user/handle-slack-login",
+    matcher: match("/api/user/handle-slack-login", { decode: decodeURIComponent }),
+    schema: HandleSlackLoginRequestSchema,
+  },
+  {
     pattern: "/api/onboarding/answer",
     matcher: match("/api/onboarding/answer", { decode: decodeURIComponent }),
     schema: SaveAnswerRequestSchema,
@@ -101,6 +111,26 @@ const schemaMap: SchemaEntry[] = [
     pattern: "/api/clients/:clientUuid/ad-accounts/:adAccountId",
     matcher: match("/api/clients/:clientUuid/ad-accounts/:adAccountId", { decode: decodeURIComponent }),
     schema: DeleteClientFacebookAdAccountRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/slack/conversation-id",
+    matcher: match("/api/clients/:clientUuid/slack/conversation-id", { decode: decodeURIComponent }),
+    schema: SetSlackConversationIdRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/slack/send-message",
+    matcher: match("/api/clients/:clientUuid/slack/send-message", { decode: decodeURIComponent }),
+    schema: SendMessageToSlackRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/slack/workspace-token",
+    matcher: match("/api/clients/:clientUuid/slack/workspace-token", { decode: decodeURIComponent }),
+    schema: SetSlackWorkspaceTokenRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid/slack/send-message-with-file",
+    matcher: match("/api/clients/:clientUuid/slack/send-message-with-file", { decode: decodeURIComponent }),
+    schema: SendMessageWithFileToSlackRequestSchema,
   },
 ];
 

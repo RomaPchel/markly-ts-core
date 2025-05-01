@@ -11,3 +11,9 @@ export interface HandleFacebookLoginRequest {
   code: string;
   redirectUri: string;
 }
+
+export interface HandleSlackLoginRequest {
+  code: string;
+  redirectUri: string;
+  organizationClientId: string;
+}

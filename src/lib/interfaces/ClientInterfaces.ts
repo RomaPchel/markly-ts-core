@@ -7,3 +7,19 @@ export interface CreateClientRequest {
 export interface CreateClientFacebookAdAccountRequest {
     adAccountId: string;
 }
+
+export interface SetSlackConversationIdRequest {
+    conversationId: string;
+}
+
+export interface SendMessageToSlackRequest {
+    message: string;
+}
+
+export interface SetSlackWorkspaceTokenRequest {
+    tokenId: string;
+}
+
+export interface SendMessageWithFileToSlackRequest {
+    message: string;
+}
