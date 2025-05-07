@@ -22,4 +22,6 @@ export interface SetSlackWorkspaceTokenRequest {
 
 export interface SendMessageWithFileToSlackRequest {
     message: string;
+    pdfBuffer: Buffer;
+    fileName: string;
 }
