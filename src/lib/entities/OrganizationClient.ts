@@ -32,4 +32,7 @@ export class OrganizationClient extends BaseEntity {
     (schedulingOption: SchedulingOption) => schedulingOption.client,
   )
   schedulingOption? = new Collection<SchedulingOption>(this);
+
+  @Property({ type: 'array', nullable: true })
+  emails?: string[];
 }

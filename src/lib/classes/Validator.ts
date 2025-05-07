@@ -23,6 +23,7 @@ import {
   SendMessageToSlackRequestSchema,
   SetSlackWorkspaceTokenRequestSchema,
   SendMessageWithFileToSlackRequestSchema,
+  UpdateClientRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -101,6 +102,11 @@ const schemaMap: SchemaEntry[] = [
     pattern: "/api/clients",
     matcher: match("/api/clients", { decode: decodeURIComponent }),
     schema: CreateClientRequestSchema,
+  },
+  {
+    pattern: "/api/clients/:clientUuid",
+    matcher: match("/api/clients/:clientUuid", { decode: decodeURIComponent }),
+    schema: UpdateClientRequestSchema,
   },
   {
     pattern: "/api/clients/:clientUuid/ad-accounts",

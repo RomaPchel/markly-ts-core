@@ -123,3 +123,8 @@ export const SetSlackWorkspaceTokenRequestSchema = z.object({
 export const SendMessageWithFileToSlackRequestSchema = z.object({
   message: z.string()
 });
+
+export const UpdateClientRequestSchema = z.object({
+  name: z.string().optional(),
+  emails: z.array(z.string()).optional()
+});

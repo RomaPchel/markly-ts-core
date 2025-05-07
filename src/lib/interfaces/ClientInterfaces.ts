@@ -4,6 +4,11 @@ export interface CreateClientRequest {
     // tiktokAdAccounts: string[];
 }
 
+export interface UpdateClientRequest {
+    name?: string;
+    emails?: string[];
+}
+
 export interface CreateClientFacebookAdAccountRequest {
     adAccountId: string;
 }
