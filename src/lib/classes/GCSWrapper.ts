@@ -60,14 +60,23 @@ export class GCSWrapper {
     return exists;
   }
 
-    public async getReport(publicUrlOrPath: string) {
-        const pathMatch = publicUrlOrPath.match(/\/([^/]+\/[^/?]+)/);
-        const filePathInBucket = pathMatch ? decodeURIComponent(pathMatch[1]) : publicUrlOrPath;
+  public async getReport(publicUrlOrPath: string) {
+    let filePathInBucket: string;
 
-        const bucket = this.storage.bucket(this.bucketName);
-        const file = bucket.file(filePathInBucket);
+    const cleanedUrl = publicUrlOrPath.split("?")[0];
 
-        const [fileBuffer] = await file.download();
-        return fileBuffer.toString('base64');
+    if (cleanedUrl.startsWith("https://storage.googleapis.com/")) {
+      filePathInBucket = cleanedUrl.replace(`https://storage.googleapis.com/${this.bucketName}/`, "");
+    } else if (cleanedUrl.startsWith("gs://")) {
+      filePathInBucket = cleanedUrl.replace(`gs://${this.bucketName}/`, "");
+    } else {
+      filePathInBucket = cleanedUrl;
     }
+
+    const file = this.storage.bucket(this.bucketName).file(filePathInBucket);
+
+    const [fileBuffer] = await file.download();
+    return fileBuffer.toString("base64");
+  }
+
 }

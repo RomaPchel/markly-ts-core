@@ -74,5 +74,5 @@ export interface ReportJobData {
   organizationUuid: string;
   reviewNeeded: boolean;
   accountId: string;
-  dataPreset: FACEBOOK_DATE_PRESETS;
+  datePreset: FACEBOOK_DATE_PRESETS;
 }
