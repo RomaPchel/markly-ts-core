@@ -5,8 +5,8 @@ import { AuthenticationUtil } from "../utils/AuthenticationUtil.js";
 import type { User } from "../entities/User.js";
 
 export const AuthMiddleware: () => Application.Middleware<
-  Application.DefaultState,
-  Application.DefaultContext
+    Application.DefaultState,
+    Application.DefaultContext
 > = (): Middleware => {
   return async (ctx: Context, next: Next) => {
     const excludedEndpoints: string[] = ["/login", "/register", "/refresh"];
@@ -22,7 +22,7 @@ export const AuthMiddleware: () => Application.Middleware<
 
     try {
       const user: User | null =
-        await AuthenticationUtil.fetchUserWithTokenInfo(token);
+          await AuthenticationUtil.fetchUserWithTokenInfo(token);
       if (!token || !user) {
         ctx.throw(401, "Unauthorized");
       } else {
