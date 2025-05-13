@@ -1,29 +1,28 @@
 import type Application from "koa";
-import type { Context, Middleware, Next } from "koa";
+import type { Context, Next } from "koa";
 import jwt from "jsonwebtoken";
 import { AuthenticationUtil } from "../utils/AuthenticationUtil.js";
 import type { User } from "../entities/User.js";
 
-export const AuthMiddleware: () => Application.Middleware<
-    Application.DefaultState,
-    Application.DefaultContext
-> = (): Middleware => {
+export const AuthMiddleware = (
+    excludedEndpoints: string[] = ["/login", "/register", "/refresh"]
+): Application.Middleware<Application.DefaultState, Application.DefaultContext> => {
   return async (ctx: Context, next: Next) => {
-    const excludedEndpoints: string[] = ["/login", "/register", "/refresh"];
     if (excludedEndpoints.some((endpoint) => ctx.path.includes(endpoint))) {
       await next();
       return;
     }
-    const token: string = ctx.get("Authorization").split(" ")[1];
+
+    const authHeader = ctx.get("Authorization");
+    const token: string | undefined = authHeader?.split(" ")[1];
 
     if (!token) {
       ctx.throw(401, "No token provided");
     }
 
     try {
-      const user: User | null =
-          await AuthenticationUtil.fetchUserWithTokenInfo(token);
-      if (!token || !user) {
+      const user: User | null = await AuthenticationUtil.fetchUserWithTokenInfo(token);
+      if (!user) {
         ctx.throw(401, "Unauthorized");
       } else {
         ctx.state.user = user;
@@ -31,7 +30,9 @@ export const AuthMiddleware: () => Application.Middleware<
       }
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
-        ctx.throw(401, "Token expired.");
+        ctx.throw(401, "Token expired");
+      } else {
+        ctx.throw(401, "Invalid token");
       }
     }
   };
