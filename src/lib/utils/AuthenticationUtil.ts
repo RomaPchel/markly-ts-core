@@ -16,6 +16,9 @@ export class AuthenticationUtil {
   public static readonly REFRESH_SECRET = process.env
     .REFRESH_TOKEN_SECRET as string;
 
+  public static readonly EMAIL_CHANGE_SECRET = process.env
+    .EMAIL_CHANGE_TOKEN_SECRET as string;
+
   public static async register(body: RegistrationRequestBody) {
     const existingUser: User | null = await database.em.findOne(User, {
       email: body.email,
@@ -54,13 +57,61 @@ export class AuthenticationUtil {
             return;
           }
 
+          const user = await database.em.findOne(User, {
+            uuid: decoded.uuid,
+          });
+
+          if (!user) {
+            resolve(null);
+            return;
+          }
+
+          console.log(user.email)
+
           const newAccessToken = this.signAccessToken({
             uuid: decoded.uuid,
-            email: decoded.email,
+            email: user.email,
             roles: decoded.roles,
           });
 
+          console.log(newAccessToken)
+
           resolve(newAccessToken);
+        },
+      );
+    });
+  }
+
+  public static verifyEmailChangeToken(emailChangeToken: string) {
+    return new Promise<{
+      userUuid: string;
+      isExpired: boolean;
+      newEmail: string;
+    } | null>((resolve, reject) => {
+      jwt.verify(
+        emailChangeToken,
+        this.EMAIL_CHANGE_SECRET,
+        async (
+          err: VerifyErrors | null,
+          decoded: JwtPayload | string | undefined,
+        ) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          if (
+            !decoded || 
+            typeof decoded === "string" ||
+            !decoded.exp 
+          ) {
+            resolve(null);
+            return;
+          }
+
+          const isExpired = Date.now() / 1000 > decoded.exp;
+
+          resolve({userUuid: decoded.userUuid, isExpired, newEmail: decoded.newEmail});
         },
       );
     });
@@ -123,6 +174,17 @@ export class AuthenticationUtil {
     };
     return jwt.sign(payload, this.REFRESH_SECRET, {
       expiresIn: TokenExpiration.REFRESH,
+    });
+  }
+
+  public static signEmailChangeToken(cleanedUser: CleanedUser, newEmail: string) {
+    const payload = {
+      userUuid: cleanedUser.uuid,
+      newEmail,
+      iat: Math.floor(Date.now() / 1000),
+    };
+    return jwt.sign(payload, this.EMAIL_CHANGE_SECRET, {
+      expiresIn: TokenExpiration.EMAIL_CHANGE,
     });
   }
 

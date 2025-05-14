@@ -17,3 +17,12 @@ export interface HandleSlackLoginRequest {
   redirectUri: string;
   organizationClientId: string;
 }
+
+export interface ChangeEmailRequest {
+  email: string;
+  password: string;
+}
+
+export interface VerifyEmailChangeRequest {
+  token: string;
+}

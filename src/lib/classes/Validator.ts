@@ -24,6 +24,8 @@ import {
   SetSlackWorkspaceTokenRequestSchema,
   SendMessageWithFileToSlackRequestSchema,
   UpdateClientRequestSchema,
+  ChangeEmailRequestSchema,
+  VerifyEmailChangeRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -138,6 +140,17 @@ const schemaMap: SchemaEntry[] = [
     matcher: match("/api/clients/:clientUuid/slack/send-message-with-file", { decode: decodeURIComponent }),
     schema: SendMessageWithFileToSlackRequestSchema,
   },
+  {
+    pattern: "/api/user/send-change-email-email",
+    matcher: match("/api/user/send-change-email-email", { decode: decodeURIComponent }),
+    schema: ChangeEmailRequestSchema,
+  },
+  {
+    pattern: "/api/user/verify-email-change",
+    matcher: match("/api/user/verify-email-change", { decode: decodeURIComponent }),
+    schema: VerifyEmailChangeRequestSchema,
+  },
+  
 ];
 
 export class Validator {
