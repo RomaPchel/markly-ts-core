@@ -51,3 +51,6 @@ export * from 'lib/schemas/ZodSchemas.js'
 
 //enums
 export * from "lib/enums/enums.js"
+
+//migration
+export {runMigrations} from "./lib/db/config/Migrator.js";
