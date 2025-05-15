@@ -19,6 +19,7 @@ import {Report} from "../../entities/Report.js";
 import { ClientFacebookAdAccount } from "lib/entities/ClientFacebookAdAccount.js";
 import { ClientToken } from "lib/entities/ClientToken.js";
 import { ChangeEmailToken } from "lib/entities/ChangeEmailToken.js";
+import { Migrator } from "@mikro-orm/migrations";
 export class Database {
   private static instance: Database;
   public orm: MikroORM;
@@ -33,6 +34,7 @@ export class Database {
     if (!Database.instance) {
       const orm = await MikroORM.init({
         metadataProvider: TsMorphMetadataProvider,
+        extensions: [Migrator],
         entities: [
             User,
           Organization,
