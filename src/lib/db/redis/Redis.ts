@@ -11,8 +11,8 @@ export class RedisClient {
 
   public static getInstance(): Redis {
     if (!RedisClient.instance) {
-      const REDIS_HOST = process.env.REDISHOST || "localhost";
-      const REDIS_PORT = process.env.REDISPORT || 6379;
+      const REDIS_HOST = process.env.REDIS_HOST || "localhost";
+      const REDIS_PORT = process.env.REDIS_PORT || 6379;
       const options: RedisOptions = {
         host: REDIS_HOST,
         port: Number(REDIS_PORT),

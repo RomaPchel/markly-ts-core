@@ -1,6 +1,6 @@
 {
   "name": "marklie-ts-core",
-  "version": "1.1.21",
+  "version": "1.1.22",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
     "prettier:format": "pnpm exec prettier . --write",
     "prettier:check": "npx prettier . --check\n",
     "docker:up": "docker compose -f ../docker/compose.yaml up -d",
-    "start": "node --env-file .env --experimental-specifier-resolution=node dist/index.js",
+    "start": "node --experimental-specifier-resolution=node dist/index.js",
     "watch": "pnpm docker:up & npx nodemon --config ./nodemon.json",
     "start:dev": "npm run watch",
     "publish:build": "pnpm build:all && pnpm publish",
