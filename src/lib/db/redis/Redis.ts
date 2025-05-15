@@ -17,6 +17,9 @@ export class RedisClient {
         host: REDIS_HOST,
         port: Number(REDIS_PORT),
         maxRetriesPerRequest: null,
+        enableAutoPipelining: true,
+        connectTimeout: 5000,
+        lazyConnect: false,
       };
       RedisClient.instance = new Redis(options);
 
