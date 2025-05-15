@@ -1,4 +1,4 @@
-import { defineConfig } from "@mikro-orm/core";
+import { defineConfig } from "@mikro-orm/postgresql";
 import {User} from "../../entities/User.js";
 import {Organization} from "../../entities/Organization.js";
 import {OrganizationClient} from "../../entities/OrganizationClient.js";
