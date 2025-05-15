@@ -1,32 +1,32 @@
 import { MikroORM } from '@mikro-orm/core';
-import {Log} from "../../classes/Logger.js";
-import config from '../config/mikro-orm.config.js'
+import { Log } from '../../classes/Logger.js';
+import config from '../config/mikro-orm.config.js';
 
 const logger = Log.getInstance().extend('migrations');
 
 export async function runMigrations(): Promise<void> {
-    logger.info('Running pending migrations...');
+    if (process.env.ENVIRONMENT !== 'production') {
+        logger.info('Skipping migrations: Not in production environment');
+        return;
+    }
 
-    let orm: MikroORM;
+    logger.info('🔄 Running pending MikroORM migrations...');
+
+    let orm: MikroORM | undefined;
 
     try {
         orm = await MikroORM.init(config);
 
-        const pending = await orm.getMigrator().getPendingMigrations();
+        const migrator = orm.getMigrator();
 
-        if (pending.length === 0) {
-            logger.info('No pending migrations.');
-        } else {
-            const executed = await orm.getMigrator().up();
-            logger.info(`Applied ${executed.length} migration(s):`);
-            executed.forEach(m => logger.info(`  - ${m.name}`));
-        }
+        await migrator.createMigration();
+        await migrator.up();
 
     } catch (error) {
-        logger.error(('Migration failed:'), error);
+        logger.error('❌ Migration failed:', error);
         process.exitCode = 1;
+        throw error;
     } finally {
-        // @ts-ignore
         if (orm) {
             await orm.close(true);
         }
