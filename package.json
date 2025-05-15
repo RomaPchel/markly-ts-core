@@ -1,6 +1,6 @@
 {
   "name": "marklie-ts-core",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,13 @@
     "start": "node --env-file .env --experimental-specifier-resolution=node dist/index.js",
     "watch": "pnpm docker:up & npx nodemon --config ./nodemon.json",
     "start:dev": "npm run watch",
-    "publish:build": "pnpm build:all && pnpm publish"
+    "publish:build": "pnpm build:all && pnpm publish",
+    "migration:create": "node --loader ts-node/esm ./node_modules/.bin/mikro-orm migration:create",
+    "migration:up": "node --loader ts-node/esm ./node_modules/.bin/mikro-orm migration:up",
+    "migration:down": "node --loader ts-node/esm ./node_modules/.bin/mikro-orm migration:down"
+  },
+  "mikro-orm": {
+    "configPaths": ["./src/db/config/mikro-orm.config.ts"]
   },
   "dependencies": {
     "@google-cloud/pubsub": "^4.11.0",
