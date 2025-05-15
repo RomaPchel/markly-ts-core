@@ -137,3 +137,8 @@ export const ChangeEmailRequestSchema = z.object({
 export const VerifyEmailChangeRequestSchema = z.object({
   token: z.string()
 });
+
+export const ChangePasswordRequestSchema = z.object({
+  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  newPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+});

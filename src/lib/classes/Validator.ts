@@ -26,6 +26,7 @@ import {
   UpdateClientRequestSchema,
   ChangeEmailRequestSchema,
   VerifyEmailChangeRequestSchema,
+  ChangePasswordRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -150,7 +151,11 @@ const schemaMap: SchemaEntry[] = [
     matcher: match("/api/user/verify-email-change", { decode: decodeURIComponent }),
     schema: VerifyEmailChangeRequestSchema,
   },
-  
+  {
+    pattern: "/api/user/change-password",
+    matcher: match("/api/user/change-password", { decode: decodeURIComponent }),
+    schema: ChangePasswordRequestSchema,
+  },
 ];
 
 export class Validator {

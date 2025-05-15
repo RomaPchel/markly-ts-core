@@ -26,3 +26,8 @@ export interface ChangeEmailRequest {
 export interface VerifyEmailChangeRequest {
   token: string;
 }
+
+export interface ChangePasswordRequest {
+  password: string;
+  newPassword: string;
+}
