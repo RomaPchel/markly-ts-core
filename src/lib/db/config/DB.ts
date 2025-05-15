@@ -20,6 +20,7 @@ import { ClientFacebookAdAccount } from "lib/entities/ClientFacebookAdAccount.js
 import { ClientToken } from "lib/entities/ClientToken.js";
 import { ChangeEmailToken } from "lib/entities/ChangeEmailToken.js";
 import { Migrator } from "@mikro-orm/migrations";
+import path from "node:path";
 export class Database {
   private static instance: Database;
   public orm: MikroORM;
@@ -35,6 +36,11 @@ export class Database {
       const orm = await MikroORM.init({
         metadataProvider: TsMorphMetadataProvider,
         extensions: [Migrator],
+        migrations: {
+          path: path.resolve(__dirname, '../migrations'),
+          pathTs: path.resolve(__dirname, '../migrations'),
+          emit: 'ts',
+        },
         entities: [
             User,
           Organization,
