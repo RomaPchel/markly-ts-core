@@ -4,13 +4,21 @@ import jwt from "jsonwebtoken";
 import { AuthenticationUtil } from "../utils/AuthenticationUtil.js";
 import type { User } from "../entities/User.js";
 
+type ExcludedEndpoint = string | RegExp;
+
 export const AuthMiddleware = (
-    excludedEndpoints: string[] = ["/login", "/register", "/refresh"]
+    excludedEndpoints: ExcludedEndpoint[] = ["/login", "/register", "/refresh"]
 ): Application.Middleware<Application.DefaultState, Application.DefaultContext> => {
   return async (ctx: Context, next: Next) => {
-    if (excludedEndpoints.some((endpoint) => ctx.path.includes(endpoint))) {
-      await next();
-      return;
+    const isExcluded = excludedEndpoints.some((endpoint) => {
+      if (endpoint instanceof RegExp) {
+        return endpoint.test(ctx.path);
+      }
+      return ctx.path === endpoint;
+    });
+
+    if (isExcluded) {
+      return next();
     }
 
     const authHeader = ctx.get("Authorization");
