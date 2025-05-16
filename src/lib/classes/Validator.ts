@@ -27,6 +27,8 @@ import {
   ChangeEmailRequestSchema,
   VerifyEmailChangeRequestSchema,
   ChangePasswordRequestSchema,
+  VerifyPasswordRecoveryRequestSchema,
+  SendPasswordRecoveryEmailRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -155,6 +157,16 @@ const schemaMap: SchemaEntry[] = [
     pattern: "/api/user/change-password",
     matcher: match("/api/user/change-password", { decode: decodeURIComponent }),
     schema: ChangePasswordRequestSchema,
+  },
+  {
+    pattern: "/api/user/send-password-recovery-email",
+    matcher: match("/api/user/send-password-recovery-email", { decode: decodeURIComponent }),
+    schema: SendPasswordRecoveryEmailRequestSchema,
+  },
+  {
+    pattern: "/api/user/verify-password-recovery",
+    matcher: match("/api/user/verify-password-recovery", { decode: decodeURIComponent }),
+    schema: VerifyPasswordRecoveryRequestSchema,
   },
 ];
 

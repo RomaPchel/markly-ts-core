@@ -31,3 +31,12 @@ export interface ChangePasswordRequest {
   password: string;
   newPassword: string;
 }
+
+export interface SendPasswordRecoveryEmailRequest {
+  email: string;
+}
+
+export interface VerifyPasswordRecoveryRequest {
+  token: string;
+  newPassword: string;
+}
