@@ -19,6 +19,9 @@ export class AuthenticationUtil {
   public static readonly EMAIL_CHANGE_SECRET = process.env
     .EMAIL_CHANGE_TOKEN_SECRET as string;
 
+  public static readonly PASSWORD_RECOVERY_SECRET = process.env
+    .PASSWORD_RECOVERY_TOKEN_SECRET as string;
+
   public static async register(body: RegistrationRequestBody) {
     const existingUser: User | null = await database.em.findOne(User, {
       email: body.email,
@@ -117,6 +120,49 @@ export class AuthenticationUtil {
     });
   }
 
+  public static verifyPasswordRecoveryToken(passwordRecoveryToken: string) {
+    return new Promise<{
+      userUuid: string;
+      isExpired: boolean;
+      email: string;
+      toRecoverPassword: boolean;
+      passwordRecoveryToken: string;
+    } | null>((resolve, reject) => {
+      jwt.verify(
+        passwordRecoveryToken,
+        this.PASSWORD_RECOVERY_SECRET,
+        async (
+          err: VerifyErrors | null,
+          decoded: JwtPayload | string | undefined,
+        ) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          if (
+            !decoded || 
+            typeof decoded === "string" ||
+            !decoded.exp 
+          ) {
+            resolve(null);
+            return;
+          }
+
+          const isExpired = Date.now() / 1000 > decoded.exp;
+
+          resolve({
+            userUuid: decoded.userUuid, 
+            isExpired, 
+            email: decoded.email, 
+            toRecoverPassword: decoded.toRecoverPassword,
+            passwordRecoveryToken: passwordRecoveryToken
+          });
+        },
+      );
+    });
+  }
+
   public static async login(body: LoginRequestBody) {
     const existingUser: User | null = await database.em.findOne(User, {
       email: body.email,
@@ -185,6 +231,18 @@ export class AuthenticationUtil {
     };
     return jwt.sign(payload, this.EMAIL_CHANGE_SECRET, {
       expiresIn: TokenExpiration.EMAIL_CHANGE,
+    });
+  }
+
+  public static signPasswordRecoveryToken(cleanedUser: CleanedUser) {
+    const payload = {
+      userUuid: cleanedUser.uuid,
+      email: cleanedUser.email,
+      toRecoverPassword: true,
+      iat: Math.floor(Date.now() / 1000),
+    };
+    return jwt.sign(payload, this.PASSWORD_RECOVERY_SECRET, {
+      expiresIn: TokenExpiration.PASSWORD_RECOVERY,
     });
   }
 
