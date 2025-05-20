@@ -17,6 +17,7 @@ interface BaseSchedule {
 
 interface TimeBasedSchedule extends BaseSchedule {
   time: string;
+  timeZone: string;
 }
 
 interface ScheduleModifiers {
@@ -75,9 +76,4 @@ export interface ReportJobData {
   reviewNeeded: boolean;
   accountId: string;
   datePreset: FACEBOOK_DATE_PRESETS;
-}
-
-interface TimeBasedSchedule extends BaseSchedule {
-  time: string;
-  timeZone: string;
 }

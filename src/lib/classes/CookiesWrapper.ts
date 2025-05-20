@@ -26,7 +26,7 @@ export class CookiesWrapper {
     return {
       httpOnly: true,
 
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.ENVIRONEMNT === "production",
 
       sameSite: "lax",
 
@@ -35,7 +35,7 @@ export class CookiesWrapper {
       path: "/",
 
       domain:
-        process.env.NODE_ENV === "production" ? "https://marklie.com" : undefined,
+        process.env.ENVIRONEMNT === "production" ? "https://marklie.com" : undefined,
     };
   }
 }
