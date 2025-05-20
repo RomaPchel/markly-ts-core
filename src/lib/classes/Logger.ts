@@ -9,7 +9,7 @@ export class Log {
 
   private constructor(baseName: string) {
     this.baseName = baseName;
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = process.env.ENVIRONMENT === "production";
 
     const logFormat = format.printf(({ level, message }) => {
       const namespace = isProduction
