@@ -30,7 +30,10 @@ export class BullMQWrapper {
     this.worker = new Worker(
         queueName,
         async (job: Job) => this.processJob(job),
-        { connection: this.connection },
+        { connection: this.connection,
+          concurrency: 1,
+          lockDuration: 360000
+        },
     );
 
     this.worker.on('completed', (job) => {
