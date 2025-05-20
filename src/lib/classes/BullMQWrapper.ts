@@ -58,7 +58,7 @@ export class BullMQWrapper {
   async addScheduledJob(name: string, data: any, cron: string): Promise<Job | undefined> {
     try {
       const jobId = `cron:${name}:${Buffer.from(cron).toString('base64')}`;
-      return await this.queue.upsertJobScheduler(jobId, { pattern: cron }, {
+      return await this.queue.upsertJobScheduler(jobId, { pattern: cron, tz: data.timeZone }, {
         name: name,
         data: data,
         opts: {
