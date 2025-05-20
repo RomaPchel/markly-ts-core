@@ -54,7 +54,7 @@ export interface CustomSchedule extends TimeBasedSchedule, ScheduleModifiers {
   intervalDays: number;
 }
 
-export interface CronSchedule extends ScheduleModifiers {
+export interface CronSchedule extends ScheduleModifiers, TimeBasedSchedule {
   frequency: "cron";
   cronExpression: string;
   clientUuid: string;
@@ -76,4 +76,5 @@ export interface ReportJobData {
   reviewNeeded: boolean;
   accountId: string;
   datePreset: FACEBOOK_DATE_PRESETS;
+  timeZone: string;
 }
