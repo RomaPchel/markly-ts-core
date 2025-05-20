@@ -76,3 +76,8 @@ export interface ReportJobData {
   accountId: string;
   datePreset: FACEBOOK_DATE_PRESETS;
 }
+
+interface TimeBasedSchedule extends BaseSchedule {
+  time: string;
+  timeZone: string;
+}
