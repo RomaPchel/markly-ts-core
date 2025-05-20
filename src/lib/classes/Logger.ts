@@ -9,14 +9,16 @@ export class Log {
 
   private constructor(baseName: string) {
     this.baseName = baseName;
+    const isProduction = process.env.NODE_ENV === "production";
 
     const logFormat = format.printf(({ level, message }) => {
-      const coloredNamespace = this.baseName
-        ? level === "error"
-          ? `\x1b[31m${this.baseName}\x1b[39m`
-          : `\x1b[35m${this.baseName}\x1b[39m`
-        : "";
-      return `${coloredNamespace} ${message}`;
+      const namespace = isProduction
+          ? this.baseName
+          : level === "error"
+              ? `\x1b[31m${this.baseName}\x1b[39m`
+              : `\x1b[35m${this.baseName}\x1b[39m`;
+
+      return `${namespace} ${message}`;
     });
 
     this.logger = createLogger({
@@ -59,10 +61,12 @@ export class Log {
   public error(message: unknown, error?: unknown): void {
     const logNamespace = `${this.baseName}:error`;
 
-    if (typeof message === "string") {
-      this.logger.error(message, { namespace: logNamespace });
+    if (message instanceof Error) {
+      this.logger.error(message.stack || message.message, { namespace: logNamespace });
     } else {
-      this.logger.error(JSON.stringify(message), { namespace: logNamespace });
+      this.logger.error(typeof message === "string" ? message : JSON.stringify(message), {
+        namespace: logNamespace,
+      });
     }
 
     if (error) {
