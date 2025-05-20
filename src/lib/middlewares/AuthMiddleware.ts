@@ -12,13 +12,14 @@ export const AuthMiddleware = (
       "/register", 
       "/refresh", 
       "/send-password-recovery-email",
-      "/verify-password-recovery"
+      "/verify-password-recovery",
+      /^\/api\/reports\/[0-9a-fA-F-]{36}$/
     ]
 ): Application.Middleware<Application.DefaultState, Application.DefaultContext> => {
   return async (ctx: Context, next: Next) => {
     const isExcluded = excludedEndpoints.some((endpoint) => {
       if (endpoint instanceof RegExp) {
-        return endpoint.test(ctx.path);
+        return endpoint.test(ctx.path) && ctx.method === "GET";
       }
       return ctx.path.includes(endpoint);
     });

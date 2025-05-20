@@ -69,15 +69,11 @@ export class AuthenticationUtil {
             return;
           }
 
-          console.log(user.email)
-
           const newAccessToken = this.signAccessToken({
             uuid: decoded.uuid,
             email: user.email,
             roles: decoded.roles,
           });
-
-          console.log(newAccessToken)
 
           resolve(newAccessToken);
         },
