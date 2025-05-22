@@ -7,6 +7,7 @@ export interface CreateClientRequest {
 export interface UpdateClientRequest {
     name?: string;
     emails?: string[];
+    phoneNumbers?: string[];
 }
 
 export interface CreateClientFacebookAdAccountRequest {

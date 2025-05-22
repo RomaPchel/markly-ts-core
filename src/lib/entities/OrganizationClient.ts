@@ -35,4 +35,7 @@ export class OrganizationClient extends BaseEntity {
 
   @Property({ type: 'array', nullable: true })
   emails?: string[];
+
+  @Property({ type: 'array', nullable: true })
+  phoneNumbers?: string[];
 }
