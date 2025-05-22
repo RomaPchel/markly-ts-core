@@ -54,3 +54,11 @@ export * from "lib/enums/enums.js"
 
 //migration
 export {runMigrations} from "./lib/db/config/Migrator.js";
+
+//apis
+export {SlackApi} from "./lib/apis/SlackApi.js"
+
+//services
+export {TokenService} from "./lib/services/TokenService.js"
+export {SlackService} from "./lib/services/SlackService.js"
+
