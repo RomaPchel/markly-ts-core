@@ -26,7 +26,7 @@ export class CookiesWrapper {
     return {
       httpOnly: true,
       secure: process.env.ENVIRONEMNT === "production",
-      sameSite: "lax",
+      sameSite: process.env.ENVIRONEMNT === "production" ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: "/",
       domain:
