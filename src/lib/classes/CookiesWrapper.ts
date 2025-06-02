@@ -25,17 +25,12 @@ export class CookiesWrapper {
   public static defaultRefreshCookieOptions(): CookieOptions {
     return {
       httpOnly: true,
-
       secure: process.env.ENVIRONEMNT === "production",
-
       sameSite: "lax",
-
       maxAge: 7 * 24 * 60 * 60 * 1000,
-
       path: "/",
-
       domain:
-        process.env.ENVIRONEMNT === "production" ? "https://marklie.com" : undefined,
+        process.env.ENVIRONEMNT === "production" ? "agencies-service-10669311980.europe-west4.run.app" : undefined,
     };
   }
 }
