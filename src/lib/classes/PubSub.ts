@@ -26,19 +26,25 @@ export class PubSubWrapper {
         onMessage: (msg: T) => Promise<void>,
         onError?: (err: Error) => void
     ): Subscription {
-        const environmentSubscription = `${process.env.ENVIRONMENT}-${subscriptionName}`
+        const environmentSubscription = `${process.env.ENVIRONMENT}-${subscriptionName}`;
 
-        const subscription: Subscription = this.pubsub.subscription(environmentSubscription);
+        const subscription: Subscription = this.pubsub.subscription(environmentSubscription, {
+            flowControl: {
+                maxMessages: 10,
+                allowExcessMessages: false,
+            },
+        });
 
         subscription.on('message', (message) => {
             void (async () => {
                 try {
                     const parsed = JSON.parse(message.data.toString()) as T;
+                    logger.info(`Handling message ${message.id} from ${environmentSubscription}`);
                     await onMessage(parsed);
                     message.ack();
                 } catch (err: any) {
-                    console.error(err)
                     logger.error(`Error in message handler: ${err.message}`);
+                    if (err.response?.body) console.error(err.response.body);
                     message.nack();
                     onError?.(err);
                 }
