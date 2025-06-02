@@ -30,16 +30,19 @@ export class PubSubWrapper {
 
         const subscription: Subscription = this.pubsub.subscription(environmentSubscription);
 
-        subscription.on('message', async (message) => {
-            try {
-                const parsed = JSON.parse(message.data.toString()) as T;
-                await onMessage(parsed);
-                message.ack();
-            } catch (err: any) {
-                logger.error(`Error in message handler: ${err.message}`);
-                message.nack();
-                onError?.(err);
-            }
+        subscription.on('message', (message) => {
+            void (async () => {
+                try {
+                    const parsed = JSON.parse(message.data.toString()) as T;
+                    await onMessage(parsed);
+                    message.ack();
+                } catch (err: any) {
+                    console.error(err)
+                    logger.error(`Error in message handler: ${err.message}`);
+                    message.nack();
+                    onError?.(err);
+                }
+            })();
         });
 
         subscription.on('error', (err) => {
