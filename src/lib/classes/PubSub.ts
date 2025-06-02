@@ -36,6 +36,10 @@ export class PubSubWrapper {
         });
 
         subscription.on('message', (message) => {
+            const extender = setInterval(() => {
+                message.modAck(60);
+            }, 5000);
+
             void (async () => {
                 try {
                     const parsed = JSON.parse(message.data.toString()) as T;
@@ -47,6 +51,8 @@ export class PubSubWrapper {
                     if (err.response?.body) console.error(err.response.body);
                     message.nack();
                     onError?.(err);
+                } finally {
+                    clearInterval(extender);
                 }
             })();
         });
