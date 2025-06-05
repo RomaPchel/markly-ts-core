@@ -29,6 +29,7 @@ import {
   ChangePasswordRequestSchema,
   VerifyPasswordRecoveryRequestSchema,
   SendPasswordRecoveryEmailRequestSchema,
+  UpdateSchedulingOptionRequestSchema,
 } from "../schemas/ZodSchemas.js";
 
 type SchemaEntry = {
@@ -57,6 +58,11 @@ const schemaMap: SchemaEntry[] = [
     pattern: "/api/reports/schedule",
     matcher: match("/api/reports/schedule", { decode: decodeURIComponent }),
     schema: ScheduleReportsRequestSchema,
+  },
+  {
+    pattern: "/api/reports/scheduling-option/:uuid",
+    matcher: match("/api/reports/scheduling-option/:uuid", { decode: decodeURIComponent }),
+    schema: UpdateSchedulingOptionRequestSchema,
   },
   {
     pattern: "/api/reports",
