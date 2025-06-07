@@ -13,6 +13,12 @@ interface BaseSchedule {
   reviewNeeded: boolean;
   datePreset: FACEBOOK_DATE_PRESETS;
   organizationUuid: string;
+  metrics?: {
+    ads?: string[];
+    kpis?: string[];
+    graphs?: string[];
+    campaigns?: string[];
+  };
 }
 
 interface TimeBasedSchedule extends BaseSchedule {
@@ -77,4 +83,10 @@ export interface ReportJobData {
   accountId: string;
   datePreset: FACEBOOK_DATE_PRESETS;
   timeZone: string;
+  metrics?: {
+    ads?: string[];
+    kpis?: string[];
+    graphs?: string[];
+    campaigns?: string[];
+  };
 }
