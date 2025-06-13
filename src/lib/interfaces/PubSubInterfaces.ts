@@ -5,6 +5,7 @@ export interface NotificationDataMessage {
 
 export interface NotifyReportReadyMessage extends NotificationDataMessage {
     organizationUuid: string,
+    reportUuid: string
 }
 
 export interface NotifyChangeEmailMessage extends NotificationDataMessage {
