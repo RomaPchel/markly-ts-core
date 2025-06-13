@@ -36,6 +36,7 @@ export {RoleMiddleware} from 'lib/middlewares/RolesMiddleware.js'
 export {ErrorMiddleware} from 'lib/middlewares/ErrorMiddleware.js'
 export {ValidationMiddleware} from 'lib/middlewares/ValidationMiddleware.js'
 export {CookiesMiddleware} from 'lib/middlewares/CookiesMiddleware.js'
+export {ActivityLogMiddleware} from 'lib/middlewares/LogsMiddleware.js'
 
 //interfaces
 export * from 'lib/interfaces/AuthInterfaces.js'
