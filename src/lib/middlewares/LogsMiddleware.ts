@@ -69,13 +69,13 @@ export const ActivityLogMiddleware = () => {
             const responseBody = ctx.body;
 
             const log = database.em.create(ActivityLog, {
-                organizationUuid: matched.getOrganizationUuid?.(ctx) || organization.uuid,
-                userUuid: user.uuid,
+                organization: matched.getOrganizationUuid?.(ctx) || organization.uuid,
+                user: user.uuid,
                 action: matched.action,
                 targetType: matched.targetType ?? null,
                 targetUuid: matched.getTargetUuid?.(ctx, responseBody) ?? null,
                 metadata: matched.getMetadata?.(ctx) ?? null,
-                clientUuid: matched.getClientUuid?.(ctx) ?? null,
+                client: matched.getClientUuid?.(ctx) ?? null,
                 actor: "user"
             });
 

@@ -7,15 +7,6 @@ import {OrganizationClient} from "./OrganizationClient.js";
 @Entity()
 export class ActivityLog extends BaseEntity {
     @Property()
-    organizationUuid!: string;
-
-    @Property({ nullable: true })
-    userUuid?: string | null;
-
-    @Property({ nullable: true })
-    clientUuid?: string | null;
-
-    @Property()
     action!: string; // e.g., "created_report", "sent_scheduled_report"
 
     @Property({ nullable: true })
