@@ -30,11 +30,11 @@ export class ActivityLog extends BaseEntity {
     @Property({ default: 'user' })
     actor!: 'user' | 'system';
 
-    @ManyToOne(() => Organization)
-    organization!: Organization;
+    @ManyToOne(() => Organization, { nullable: true })
+    organization?: Organization;
 
-    @ManyToOne(() => User)
-    user!: User;
+    @ManyToOne(() => User, { nullable: true })
+    user?: User;
 
     @ManyToOne(() => OrganizationClient, { nullable: true })
     client?: OrganizationClient;
