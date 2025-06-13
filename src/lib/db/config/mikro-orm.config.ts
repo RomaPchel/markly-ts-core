@@ -20,6 +20,7 @@ import {ChangeEmailToken} from "../../entities/ChangeEmailToken.js";
 import {Migrator, TSMigrationGenerator } from "@mikro-orm/migrations";
 import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 import { PasswordRecoveryToken } from "lib/entities/PasswordRecoveryToken.js";
+import {ActivityLog} from "../../entities/ActivityLog.js";
 
 export default defineConfig({
     metadataProvider: TsMorphMetadataProvider,
@@ -55,7 +56,8 @@ export default defineConfig({
         ClientFacebookAdAccount,
         ClientToken,
         ChangeEmailToken,
-        PasswordRecoveryToken
+        PasswordRecoveryToken,
+        ActivityLog
     ],
     dbName: process.env.DATABASE_NAME || "saas",
     port: Number(process.env.DATABASE_PORT) || 5432,
