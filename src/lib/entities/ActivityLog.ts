@@ -1,5 +1,8 @@
-import { Entity, Property } from '@mikro-orm/core';
+import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import { BaseEntity } from './BaseEntity.js';
+import {Organization} from "./Organization.js";
+import {User} from "./User.js";
+import {OrganizationClient} from "./OrganizationClient.js";
 
 @Entity()
 export class ActivityLog extends BaseEntity {
@@ -26,4 +29,13 @@ export class ActivityLog extends BaseEntity {
 
     @Property({ default: 'user' })
     actor!: 'user' | 'system';
+
+    @ManyToOne(() => Organization)
+    organization!: Organization;
+
+    @ManyToOne(() => User)
+    user!: User;
+
+    @ManyToOne(() => OrganizationClient, { nullable: true })
+    client?: OrganizationClient;
 }
